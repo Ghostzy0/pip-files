@@ -16,7 +16,7 @@ open 'dist/Files Baseline.app'
 open 'dist/Pip Files.app'
 ```
 
-In the internal monorepo first `cd apps/files`; in the app-specific export start at the repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. macOS may require the usual per-app Open confirmation for downloaded experimental builds. Do not disable Gatekeeper globally.
+Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. macOS may require the usual per-app Open confirmation for downloaded experimental builds. Do not disable Gatekeeper globally.
 
 Start with **Create sample folder** (baseline: **Sample**). It creates a clearly labelled disposable workspace inside the app's own data directory, never your Downloads or Documents. Preview first. Review each source, action and destination; only press Apply when intended. After applying, History shows each action and any uncertain outcome. Undo refuses changed/replaced files or an occupied original path. Undo of Copy/ZIP moves the result into a journaled hidden sibling `.pip-files-undo-*` and keeps it; no automatic purge occurs. Reveal the recovery folder in History (Finder’s Command-Shift-Period shows hidden files). For multiple actions, undo newest first.
 
@@ -37,6 +37,8 @@ Core operations use local files only. No telemetry, updater, external connection
 
 Default data lives in `~/Library/Application Support/Pip Files` (baseline: `Files Baseline`), containing `folders.json`, `destination-grants.json` and `Journal/`. `PIP_FILES_DATA_DIR` selects a separate test location before launch. Quit before backing up that directory. Restore the complete directory; do not edit journal records to force a retry. Corrupt data fails closed. Keep the data and inspect paths in Finder if recovery is uncertain. Removing a folder from the app preserves its files. Hidden recovery/staging files remain beside the affected files and consume disk space until you inspect/manage them yourself. Removing application data also removes history/undo information; preserve backups first.
 
-See [AI setup](docs/AI-SETUP.md), [verification](docs/TESTING.md), [known parity gaps](docs/PARITY.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), and [security](SECURITY.md), and [proposed roadmap](docs/ROADMAP.md). Documentation links refer to the clean app export layout. [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
+These are the **Neutral Core** and **Pip Core** variants. Neutral Plus and Pip Plus are proposed separately; this source does not contain their extra feature set. The [baseline preview](docs/images/baseline-preview.png), [Pip rule editor](docs/images/pip-editor.png), and [Pip history after undo](docs/images/pip-undo.png) show synthetic local test folders on the tested Mac. Preview behavior in Pip Core was also checked through the native accessibility tree; its screenshot is pending a valid recapture.
+
+See [AI setup](docs/AI-SETUP.md), [verification](docs/TESTING.md), [known parity gaps](docs/PARITY.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), [security](SECURITY.md), and [proposed roadmap](docs/ROADMAP.md). [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
 
 Maintained by [Ghostzy0](https://github.com/Ghostzy0), as part of Pip Reps. MIT. Please use GitHub issues for reproducible synthetic examples; do not attach private file paths, bookmarks or journals.
