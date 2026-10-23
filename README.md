@@ -6,7 +6,7 @@ Two declared editions share the same deterministic core: **Files Baseline** uses
 
 ## Build and run
 
-Requires macOS 14 or later, Apple Silicon or Intel source build, Xcode Command Line Tools with Swift 5.9+. This development host uses Swift 6.4; only tested architectures will have binary releases. No account, model download, service, Python or package dependency.
+Requires macOS 14 or later and Apple's Xcode Command Line Tools with Swift Package Manager support for the declared Swift tools version 5.9. This development host uses Swift 6.4. The project targets Apple Silicon and Intel, but only macOS 27.0.1 arm64 has recorded native runtime acceptance. No account, model download, service, Python or third-party Swift package dependency.
 
 ```sh
 swift test --jobs 2
@@ -16,7 +16,7 @@ open 'dist/Files Baseline.app'
 open 'dist/Pip Files.app'
 ```
 
-Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. macOS may require the usual per-app Open confirmation for downloaded experimental builds. Do not disable Gatekeeper globally.
+Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. If you receive an app bundle outside the App Store, macOS may require its per-app Open confirmation; this repository currently has no downloadable binaries. Do not disable Gatekeeper globally.
 
 For the step-by-step first run, see [Getting started](docs/GETTING-STARTED.md). For common questions about safety, data storage, macOS support and Hazel workflow gaps, see the [FAQ](docs/FAQ.md).
 

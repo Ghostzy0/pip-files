@@ -4,7 +4,7 @@ Pip Files is an experimental, native Swift app for macOS folder rules. The **Fil
 
 ## Requirements and current verification
 
-- macOS 14 or later and Apple's Swift toolchain (Swift 5.9+).
+- macOS 14 or later and Apple's Swift toolchain. `Package.swift` declares Swift tools version 5.9; CI does not pin a separate 5.9 compiler matrix.
 - No account, cloud service, model, Python package or external Swift package is needed.
 - Local tests and separate package builds pass for both editions; CI tests and builds the public source on macOS 14. The native workflow was last accepted on macOS 27.0.1 arm64 at source `5822bf8`; the current edition-isolation source has not yet been repeated through the native UI. Intel and older macOS runtime acceptance remain open. See [Verification and acceptance](TESTING.md).
 
