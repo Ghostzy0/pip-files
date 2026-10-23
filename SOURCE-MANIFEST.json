@@ -14,7 +14,7 @@
   "Sources/FilesCore/SafeFileOperations.swift": "d321f49ad6c9de169a3df051f540caf142e6f5bf3d8f6c5b9fd721461a4f797a",
   "Sources/FilesCore/ZipStore.swift": "05af30157937120ac6fe74cb9b251eabafa1416b748e98088ce526295f91a462",
   "Sources/PipFiles/Copy.swift": "d19b9a37068c72c84f6c05b79713f3faa51219bfe5212d58392c47c1c304b2bc",
-  "Sources/PipFiles/Main.swift": "ef7cdf3ac64ebc7641235c137b7a1ecbd6f6878bf9d759bafbd3f0c46549405d",
+  "Sources/PipFiles/Main.swift": "8019d4e09872f3804b1ad376c419f056d4e3354cb9ff170d4725cf8c291fd1a5",
   "Sources/PipFiles/PipTheme.swift": "f68eae04601e80454838e5f5fed42e18c8f1c96a6addc42643556840ecf22681",
   "Sources/PipFiles/PipView.swift": "85e9b04497268377edf326d14277714343f10e4c819772ff5211dfc241f187e7",
   "Sources/PipFiles/RuleEditor.swift": "3f664fd6262c79eee0ce529b4f2aad957ace6c0cd6aeb8645f964532c3be8c18",

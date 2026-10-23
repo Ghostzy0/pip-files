@@ -2,7 +2,12 @@ import SwiftUI
 import AppKit
 import FilesCore
 
+final class FilesAppDelegate:NSObject,NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender:NSApplication)->Bool {true}
+}
+
 @main struct PipFilesApp: App {
+    @NSApplicationDelegateAdaptor(FilesAppDelegate.self) private var appDelegate
     @StateObject private var store = AppStore()
     @AppStorage("pip.files.theme") private var look = "paper"
     @AppStorage("pip.files.appearance") private var appearance = "light"
@@ -15,6 +20,7 @@ import FilesCore
                 else { PipView() }
             }.environmentObject(store)
                 .frame(minWidth:900,minHeight:620)
+                .onDisappear {store.pauseBackground()}
                 .onChange(of:store.selected) { _, _ in if store.watching {store.pauseBackground()};store.preview = nil; store.watching = false; store.showHistory = false }
                 .onChange(of:store.showHistory) { _, showing in if showing {if store.watching {store.message = "Background rules paused while viewing History."};store.watching = false;store.preview = nil} }
                 .sheet(item:$store.editor) {draft in
