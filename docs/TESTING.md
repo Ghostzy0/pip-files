@@ -10,7 +10,7 @@ At source commit `5822bf8`, an independent clean clone passed 32 engine tests an
 
 A subsequent edition-isolation follow-up had five app-state and 32 active engine tests pass, with one expected helper skip, and built the two Core bundles. Resolver tests cover authoritative package markers, fail-closed missing/unknown markers, development-only CLI selection and rejection of packaged data-directory overrides. Native interaction of those changed packages was pending.
 
-The later integrated Plus/reference source passed 49 active tests, with one expected child-helper skip, and all four canonical package builds passed local strict/deep ad-hoc signature verification. This evidence predates the latest build-script executable privacy scan. The current source change strips debug symbols before signing and refuses promotion when the packaged executable still contains local checkout or home-directory paths. A fresh export build and hosted CI for this exact source revision are gates; no test or build claim below should be inferred from the historical results.
+A later integrated Plus/reference checkpoint passed 49 active tests, with one expected child-helper skip, and all four canonical package builds passed local strict/deep ad-hoc signature verification. These earlier results predate the final package-path scan and manual-preview/watch regression; the fresh public-export results below include both changes.
 
 ## Known open gates
 
@@ -24,6 +24,6 @@ There is no complete Hazel parity, universal safety or accessibility claim. No d
 
 ## Fresh public-export validation · 23 October 2026
 
-A fresh clean public-repository export of source through upstream commit `3ec35c9` passed `swift test --jobs 2` on macOS 27.0.1 arm64 with 50 tests passing, one expected child-helper skip, and zero failures. Each of the four canonical profiles (`replica`, `baseline-plus`, `pip`, `pip-plus`) built; all four bundle markers matched their requested profile, and each app passed `codesign --verify --deep --strict`. The new build script strips debug symbols and fails closed if its packaged executable still contains the build checkout or home path.
+A fresh public-repository export of the source included in this PR passed `swift test --jobs 2` on macOS 27.0.1 arm64 with 50 tests passing, one expected child-helper skip, and zero failures. Each canonical profile (`replica`, `baseline-plus`, `pip`, `pip-plus`) built; all four embedded edition markers matched the requested profile, and each app passed `codesign --verify --deep --strict`. The build script strips debug symbols and fails closed if the packaged executable still contains checkout or home-directory paths.
 
-These are local source/test/package checks from this host. Hosted CI for the public feature PR and native acceptance of the current edition-isolation, manual-review/watch, neutral-view and Plus changes remain pending. No app was launched in this validation slice, and no binary is published by this source PR.
+Hosted macOS 14 CI passed for this PR's tested source snapshot, including the four builds ([run 39891534765](https://github.com/Ghostzy0/pip-files/actions/runs/39891534765)). No app was launched during this validation slice. Native acceptance of the edition-isolation, manual-review/watch, neutral-view and Plus changes remains pending. No binary is published by this source PR; see the live pull request for the current CI status.

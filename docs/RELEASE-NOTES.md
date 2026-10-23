@@ -4,7 +4,7 @@
 
 The source defines neutral Files Replica and Files Baseline Plus configurations alongside Pip Files and Pip Files Plus. Plus adds read-only History search, filters, and reviewed local JSON/CSV reports. Packaged variants use independent bundle and data identities. The older generic Files Baseline profile remains available for development reproduction.
 
-This source snapshot is not a binary release. The latest build-script privacy scan and fresh clean-export build, hosted CI, and native acceptance of the edition-isolation/reference/Plus changes remain separate gates. See [Testing](TESTING.md) for exact evidence and limits.
+This source snapshot is not a binary release. The latest build-script privacy scan, fresh clean-export build and hosted CI passed for this source PR; native acceptance of the edition-isolation/reference/Plus changes remains pending. See [Testing](TESTING.md) for exact evidence and limits.
 
 ## 0.1.0-alpha.1 · historical Core workflow
 
