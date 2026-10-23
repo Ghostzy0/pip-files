@@ -57,7 +57,7 @@ import FilesCore
             message = folders.isEmpty ? "Choose a folder to begin. Nothing runs automatically." : "Ready. Background rules are paused."
         } catch { message = "Saved data could not be opened. Keep your data and check its location in Finder." }
         timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
-            Task { @MainActor in self?.poll() }
+            Task { @MainActor [weak self] in self?.poll() }
         }
     }
     func save() {

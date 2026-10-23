@@ -18,7 +18,7 @@
   "Sources/PipFiles/PipTheme.swift": "f68eae04601e80454838e5f5fed42e18c8f1c96a6addc42643556840ecf22681",
   "Sources/PipFiles/PipView.swift": "85e9b04497268377edf326d14277714343f10e4c819772ff5211dfc241f187e7",
   "Sources/PipFiles/RuleEditor.swift": "3f664fd6262c79eee0ce529b4f2aad957ace6c0cd6aeb8645f964532c3be8c18",
-  "Sources/PipFiles/Store.swift": "0ed9a96c50db5e560a31c55f89aa7d1190191975051778d79c2d49b1eb084247",
+  "Sources/PipFiles/Store.swift": "06b00672833315bba6bde4846c03efd8b2cbbff8995d110f220c896170f22650",
   "THIRD-PARTY-NOTICES.md": "ee38404bd28991c5fd85c625f7dcec50539f89912bb8f79ca3d04981008c5dd2",
   "Tests/FilesCoreTests/FilesEngineTests.swift": "b29c2ae8b5b7a11397d60b7498b0a71e232ca6b61f823b3b702cd04fc30275a0",
   "Tests/PipFilesAppTests/AppStoreTests.swift": "5fbe7896dba07147ae303ce649cdf94d9b35c1f7440c1d4ef90ce11bc2a0e9fd",
