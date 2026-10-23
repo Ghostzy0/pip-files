@@ -5,6 +5,17 @@ import FilesCore
 
 @MainActor
 final class AppStoreTests: XCTestCase {
+    func testPackagedEditionMarkerIsAuthoritativeAndMissingMarkersFailClosed() {
+        XCTAssertEqual(FeatureEdition.resolve(marker: "pip", packaged: true, arguments: ["--baseline"]), .pip)
+        XCTAssertEqual(FeatureEdition.resolve(marker: "baseline", packaged: true, arguments: []), .baseline)
+        XCTAssertNil(FeatureEdition.resolve(marker: nil, packaged: true, arguments: ["--baseline"]))
+        XCTAssertNil(FeatureEdition.resolve(marker: "unknown", packaged: true, arguments: []))
+        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app", "--baseline"]), .baseline)
+        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app"]), .pip)
+        XCTAssertNil(FeatureEdition.customDataPath("/tmp/override", packaged: true))
+        XCTAssertEqual(FeatureEdition.customDataPath("/tmp/override", packaged: false), "/tmp/override")
+    }
+
     private struct Fixture {
         let root: URL
         let input: URL

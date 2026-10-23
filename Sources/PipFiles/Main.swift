@@ -11,12 +11,12 @@ final class FilesAppDelegate:NSObject,NSApplicationDelegate {
     @StateObject private var store = AppStore()
     @AppStorage("pip.files.theme") private var look = "paper"
     @AppStorage("pip.files.appearance") private var appearance = "light"
-    private var baseline:Bool {(Bundle.main.object(forInfoDictionaryKey:"PipFilesEdition") as? String) == "baseline" || ProcessInfo.processInfo.arguments.contains("--baseline")}
+    private var baseline:Bool { FeatureEdition.selected?.baseline ?? true }
     private var palette:PipPalette {PipPalette(dark:appearance == "dark",oat:look == "oat")}
     var body: some Scene {
         WindowGroup {
             Group {
-                if (Bundle.main.object(forInfoDictionaryKey:"PipFilesEdition") as? String) == "baseline" || ProcessInfo.processInfo.arguments.contains("--baseline") { BaselineView() }
+                if FeatureEdition.selected?.baseline != false { BaselineView() }
                 else { PipView() }
             }.environmentObject(store)
                 .frame(minWidth:900,minHeight:620)

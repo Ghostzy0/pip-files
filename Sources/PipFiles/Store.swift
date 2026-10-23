@@ -25,9 +25,13 @@ import FilesCore
     var configURL: URL { root.appendingPathComponent("folders.json") }
 
     init() {
-        let custom = ProcessInfo.processInfo.environment["PIP_FILES_DATA_DIR"]
-        let editionName = (Bundle.main.object(forInfoDictionaryKey:"PipFilesEdition") as? String) == "baseline" || ProcessInfo.processInfo.arguments.contains("--baseline") ? "Files Baseline" : "Pip Files"
-        root = custom.map { URL(fileURLWithPath: $0) } ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(editionName)
+        let custom = FeatureEdition.customDataPath(ProcessInfo.processInfo.environment["PIP_FILES_DATA_DIR"], packaged: FeatureEdition.packaged)
+        let edition = FeatureEdition.selected
+        root = custom.map { URL(fileURLWithPath: $0) } ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(edition?.dataDirectoryName ?? "Pip Files Invalid Configuration")
+        guard edition != nil else {
+            message = "This package has a missing or invalid edition marker. Saved rules were not opened."
+            return
+        }
         do {
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
             engine = FilesEngine(journalDirectory: root.appendingPathComponent("Journal"))
