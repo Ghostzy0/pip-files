@@ -18,7 +18,7 @@ This file is a factual map of the public project for people and language models.
 
 ## Current status
 
-- The public source includes Neutral Core and Pip Core. The Plus feature set is not in this public source and has not been released.
+- The public source includes a generic partial-workflow Neutral Core and a Pip-themed Core. Neutral Core is not a faithful Hazel recreation. The Plus feature set is not in this public source and has not been released.
 - The source has no third-party Swift package, model, cloud service or hosted font dependency. Core operations are local.
 - GitHub Actions tests and builds on macOS 14. Recorded native workflow acceptance is limited to macOS 27.0.1 arm64 at an earlier source commit; the current edition-isolation packages still need native reacceptance.
 - No downloadable binary release is currently published. Local app bundles are ad-hoc signed, not Developer ID signed or notarised.

@@ -6,7 +6,7 @@ Pip Files is a native macOS folder automation and file organizer. It applies ord
 
 ## Is this a Hazel alternative?
 
-Pip Files is an original implementation inspired by Hazel's folder-rule workflow. It is not affiliated with Noodlesoft and does not claim full Hazel parity. It currently lacks recursive rules, content search, scripts, advanced matching, rule sharing and a login daemon. See the detailed [workflow comparison](PARITY.md) and [research notes](REFERENCES.md).
+Pip Files is an original partial workflow implementation inspired by Hazel's folder-rule workflow. Its Files Baseline edition is a generic neutral app, not a faithful Hazel recreation. Pip Files is not affiliated with Noodlesoft and does not claim full Hazel parity. It currently lacks recursive rules, content search, scripts, advanced matching, rule sharing and a login daemon. See the detailed [workflow comparison](PARITY.md) and [research notes](REFERENCES.md).
 
 ## Does it send my files to a service?
 

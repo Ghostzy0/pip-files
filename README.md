@@ -2,7 +2,7 @@
 
 Pip Files is a native Swift macOS file organizer and folder-automation app. Choose a folder, create ordered rules, preview proposed file actions, then apply the changes you reviewed. It is an experimental original implementation inspired by Hazel's folder-rule workflow, not an affiliated product or a full Hazel replacement.
 
-Two declared editions share the same deterministic core: **Files Baseline** uses standard macOS presentation; **Pip Files** applies an original Paper/Ink Pip interface. Both are MIT licensed. Neither contains Hazel or Forel code, media, branding or reserved Pip motion code.
+Two declared editions share the same deterministic core: **Files Baseline** uses standard macOS presentation; **Pip Files** applies an original Paper/Ink Pip interface. Files Baseline is the generic partial workflow implementation in this repository, not a faithful Hazel recreation. Both are MIT licensed. Neither contains Hazel or Forel code, media, branding or reserved Pip motion code.
 
 ## Build and run
 
