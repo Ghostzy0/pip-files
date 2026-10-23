@@ -1,12 +1,12 @@
-# Pip Files
+# Pip Files: local folder automation for macOS
 
-Native local folder rules for macOS. Choose a folder, preview an ordered rule, then apply the changes you reviewed. Pip Files is an experimental original implementation inspired by Hazel's folder-rule workflow. It is not affiliated with Noodlesoft and does not claim full Hazel parity.
+Pip Files is a native Swift macOS file organizer and folder-automation app. Choose a folder, create ordered rules, preview proposed file actions, then apply the changes you reviewed. It is an experimental original implementation inspired by Hazel's folder-rule workflow, not an affiliated product or a full Hazel replacement.
 
-Two declared editions share the same deterministic core: **Files Baseline** uses standard macOS presentation; **Pip Files** applies an original Paper/Ink Pip interface. Both are MIT licensed. Neither contains Hazel or Forel code, media, branding or reserved Pip motion code.
+Two declared editions share the same deterministic core: **Files Baseline** uses standard macOS presentation; **Pip Files** applies an original Paper/Ink Pip interface. Files Baseline is the generic partial workflow implementation in this repository, not a faithful Hazel recreation. Both are MIT licensed. Neither contains Hazel or Forel code, media, branding or reserved Pip motion code.
 
 ## Build and run
 
-Requires macOS 14 or later, Apple Silicon or Intel source build, Xcode Command Line Tools with Swift 5.9+. This development host uses Swift 6.4; only tested architectures will have binary releases. No account, model download, service, Python or package dependency.
+Requires macOS 14 or later and Apple's Xcode Command Line Tools with Swift Package Manager support for the declared Swift tools version 5.9. This development host uses Swift 6.4. The project targets Apple Silicon and Intel, but only macOS 27.0.1 arm64 has recorded native runtime acceptance. No account, model download, service, Python or third-party Swift package dependency.
 
 ```sh
 swift test --jobs 2
@@ -16,7 +16,9 @@ open 'dist/Files Baseline.app'
 open 'dist/Pip Files.app'
 ```
 
-Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. macOS may require the usual per-app Open confirmation for downloaded experimental builds. Do not disable Gatekeeper globally.
+Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. If you receive an app bundle outside the App Store, macOS may require its per-app Open confirmation; this repository currently has no downloadable binaries. Do not disable Gatekeeper globally.
+
+For the step-by-step first run, see [Getting started](docs/GETTING-STARTED.md). For common questions about safety, data storage, macOS support and Hazel workflow gaps, see the [FAQ](docs/FAQ.md).
 
 Start with **Create sample folder** (baseline: **Sample**). It creates a clearly labelled disposable workspace inside the app's own data directory, never your Downloads or Documents. Preview first. Review each source, action and destination; only press Apply when intended. After applying, History shows each action and any uncertain outcome. Undo refuses changed/replaced files or an occupied original path. Undo of Copy/ZIP moves the result into a journaled hidden sibling `.pip-files-undo-*` and keeps it; no automatic purge occurs. Reveal the recovery folder in History (Finder’s Command-Shift-Period shows hidden files). For multiple actions, undo newest first.
 
@@ -39,6 +41,6 @@ Default data lives in `~/Library/Application Support/Pip Files` (baseline: `File
 
 These are the **Neutral Core** and **Pip Core** variants. Neutral Plus and Pip Plus are proposed separately; this source does not contain their extra feature set. The [baseline preview](docs/images/baseline-preview.png), [Pip rule editor](docs/images/pip-editor.png), and [Pip history after undo](docs/images/pip-undo.png) show synthetic local test folders on the tested Mac. Preview behavior in Pip Core was also checked through the native accessibility tree; its screenshot is pending a valid recapture.
 
-See [AI setup](docs/AI-SETUP.md), [verification](docs/TESTING.md), [known parity gaps](docs/PARITY.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), [security](SECURITY.md), and [proposed roadmap](docs/ROADMAP.md). [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
+See [AI setup](docs/AI-SETUP.md), [verification and acceptance](docs/TESTING.md), [known workflow gaps](docs/PARITY.md), [code and research provenance](docs/REFERENCES.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), [security](SECURITY.md), and [proposed roadmap](docs/ROADMAP.md). The [`llms.txt`](llms.txt) file provides a factual link index for AI tools. [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
 
 Maintained by [Ghostzy0](https://github.com/Ghostzy0), as part of Pip Reps. MIT. Please use GitHub issues for reproducible synthetic examples; do not attach private file paths, bookmarks or journals.
