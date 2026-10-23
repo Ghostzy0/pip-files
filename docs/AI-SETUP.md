@@ -1,20 +1,21 @@
-# Set up Pip Files with an AI assistant
+# Set up with an AI assistant
 
-For a person-led walkthrough, see [Getting started](GETTING-STARTED.md) and the [FAQ](FAQ.md). Paste this prompt into an assistant with terminal access:
+Paste this into an assistant with Terminal access:
 
-> Set up this Pip Files checkout on my Mac. Read README.md, docs/GETTING-STARTED.md, docs/FAQ.md and docs/TESTING.md first. Verify macOS and Swift, run the documented tests, build both Core editions, check both signatures, then launch only the edition I request. Use its disposable sample folder, keep background rules paused and never operate on personal folders or change macOS security settings. Report the exact source commit and any verification gates that remain open.
+> Set up this Pip Files checkout using README.md and GETTING-STARTED.md. Verify macOS and Swift, run the tests, and build only the edition I request. Launch only that edition and use its disposable sample folder. Keep background rules paused. Do not use my personal folders or change macOS security settings. Report the exact source revision and distinguish tests, packaging, and native workflow evidence. Do not claim Hazel parity or a published binary.
 
-Commands from this repository root (choose one `open` command only after the build succeeds):
+From the repository root:
 
 ```sh
 sw_vers
 swift --version
 swift test --jobs 2
-./scripts/build.sh baseline
-./scripts/build.sh pip
-codesign --verify --deep --strict 'dist/Files Baseline.app'
-codesign --verify --deep --strict 'dist/Pip Files.app'
-open 'dist/Pip Files.app' # or: open 'dist/Files Baseline.app' (choose one)
+./scripts/build.sh replica
+codesign --verify --deep --strict 'dist/Files Replica.app'
 ```
 
-Requires macOS 14+ and Apple's Xcode Command Line Tools with Swift Package Manager support for the declared 5.9 tools version; no paid account or remote script install. If tools are missing, use Apple's documented install route and complete any macOS consent yourself. If a folder is unavailable, reconnect its volume or choose it again. If Preview is blocked, read its reason; do not force Apply. Setup does not require Full Disk Access. GitHub Actions currently tests and builds at source `7322bbc` on macOS 14. The bounded native picker/rule/preview/apply/history/undo workflow was last recorded for source `5822bf8` on macOS 27.0.1 arm64; current edition-isolation packages still need native reacceptance. Intel and older-macOS runtime acceptance remain open. See [verification and acceptance](TESTING.md) and [provenance](REFERENCES.md).
+Replace `replica` with exactly one requested profile: `baseline-plus`, `pip`, or `pip-plus`. For the legacy generic package use `baseline`. Open only the corresponding app.
+
+The source declares Swift tools 5.9 and a macOS 14 deployment target. CI uses a hosted macOS 14 Swift toolchain; there is no separate compiler-version matrix. A deployment target or CI build does not prove runtime acceptance on that OS or on Intel. The original bounded Core native workflow was previously tested on macOS 27.0.1 arm64; current reference-style and Plus interactions have not completed native acceptance. The app is local-only, unsandboxed, and not notarised. No setup requires Full Disk Access, a cloud account, a model, or a third-party package.
+
+If Preview is blocked, read its reason; do not force Apply. The app’s own sample is disposable. Do not start with Downloads, Documents, active download/build folders or personal data.

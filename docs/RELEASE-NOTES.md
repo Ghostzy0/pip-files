@@ -1,11 +1,11 @@
-# 0.1.0-alpha.1 Core release notes
+# Release notes
 
-**Experimental original macOS folder rules.** Two separate appearances share one local engine: **Files Baseline (Neutral Core)** uses standard macOS presentation, and **Pip Files (Pip Core)** uses the original Pip Paper/Ink presentation. These are independent application/data identities. Neutral Plus and Pip Plus are planned separately and are not included here.
+## Unreleased · experimental shared source
 
-Select folders, write ordered first-match rules, preview a proposed operation, then apply. Actions are Copy, same-filesystem Move, exact Rename, Finder tag and a single-file uncompressed ZIP up to 128 MiB. History records intent/outcome. Undo checks identity and fingerprints; Copy/ZIP undo keeps the result in a journaled hidden sibling recovery path for manual review. Moves/renames stage and verify before final placement. Background operation is opt-in while the app is open and starts paused.
+The source defines neutral Files Replica and Files Baseline Plus configurations alongside Pip Files and Pip Files Plus. Plus adds read-only History search, filters, and reviewed local JSON/CSV reports. Packaged variants use independent bundle and data identities. The older generic Files Baseline profile remains available for development reproduction.
 
-At tested code commit `5822bf8`, an independent clean clone passed 32 engine and 4 app-state tests, with one expected helper skip and zero failures. Both builds and ad-hoc signature checks passed. Both actual packaged editions completed a synthetic native picker, rule, preview, apply, history and undo workflow, and closing the last window ended each process on macOS 27.0.1 arm64. Details and executable fingerprints are in [TESTING](TESTING.md).
+This source snapshot is not a binary release. The latest build-script privacy scan and fresh clean-export build, hosted CI, and native acceptance of the edition-isolation/reference/Plus changes remain separate gates. See [Testing](TESTING.md) for exact evidence and limits.
 
-A follow-up source fix makes each packaged bundle marker authoritative even when launched with `--baseline`, and rejects missing/unknown packaged markers before opening saved data. Unbundled CLI runs use a development-specific data directory and may use the test/development data-directory override; packages ignore that override. This fix is being reverified before any binary release.
+## 0.1.0-alpha.1 · historical Core workflow
 
-These are ad-hoc signed experimental packages, not Developer ID signed or notarised. Intel and older macOS runtime remain untested. Preview cannot guarantee active writers are done, multi-action rules are not transactions, and hostile same-user name races cannot be eliminated by POSIX rename. Power-loss durability, native permission revocation/removable-volume handling and full assistive-technology acceptance remain open. Use disposable folders and keep backups. No full Hazel parity, recursion, scripts, delete action or persistent login daemon is claimed.
+At source commit `5822bf8`, the original Core workflow completed a bounded native synthetic picker/rule/preview/apply/history/undo path on macOS 27.0.1 arm64. The evidence and limitations are recorded in [Testing](TESTING.md). This historical Core result does not certify later source changes or Plus.

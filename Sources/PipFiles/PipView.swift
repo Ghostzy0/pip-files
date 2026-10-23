@@ -42,7 +42,7 @@ struct PipView:View {
     }
     var sidebar:some View {
         VStack(alignment:.leading,spacing:PipSpace.section) {
-            HStack(spacing:PipSpace.row) {PipPebble(ink:palette.ink,eye:palette.canvas,busy:store.busy).frame(width:36,height:32);Text("Pip Files").font(.system(size:21,weight:.semibold))}.padding(.top,PipSpace.section)
+            HStack(spacing:PipSpace.row) {PipPebble(ink:palette.ink,eye:palette.canvas,busy:store.busy).frame(width:36,height:32);Text(FeatureEdition.current.name).font(.system(size:21,weight:.semibold))}.padding(.top,PipSpace.section)
             VStack(alignment:.leading,spacing:PipSpace.small) {
                 HStack {Text("Folders").font(.system(size:13,weight:.semibold)).foregroundStyle(palette.secondary);Spacer();Text("\(store.folders.count)").font(.system(size:12,design:.monospaced)).foregroundStyle(palette.secondary)}
                 ScrollView {

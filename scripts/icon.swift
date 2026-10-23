@@ -1,7 +1,8 @@
 import AppKit
 import Foundation
 let output = CommandLine.arguments[1]
-let baseline = CommandLine.arguments.dropFirst(2).first == "baseline"
+let edition = CommandLine.arguments.dropFirst(2).first ?? "pip"
+let baseline = edition.hasPrefix("baseline") || edition == "replica"
 try FileManager.default.createDirectory(atPath:output,withIntermediateDirectories:true)
 for size in [16,32,128,256,512] {
     for scale in [1,2] {
