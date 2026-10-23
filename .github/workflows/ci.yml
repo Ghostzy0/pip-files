@@ -18,7 +18,9 @@ jobs:
           persist-credentials: false
       - name: Test deterministic engine and app state
         run: swift test --jobs 2
-      - name: Build both declared editions
+      - name: Build all four canonical release editions
         run: |
-          ./scripts/build.sh baseline
+          ./scripts/build.sh replica
+          ./scripts/build.sh baseline-plus
           ./scripts/build.sh pip
+          ./scripts/build.sh pip-plus

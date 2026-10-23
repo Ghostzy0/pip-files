@@ -46,7 +46,7 @@ struct RuleEditor: View {
     let draft: RuleDraft
     @Environment(\.colorScheme) private var colorScheme
     @AppStorage("pip.files.theme") private var look = "paper"
-    private var isBaseline:Bool { FeatureEdition.selected?.baseline ?? true }
+    private var isBaseline:Bool {FeatureEdition.current.baseline}
     private var palette:PipPalette {PipPalette(dark:colorScheme == .dark,oat:look == "oat")}
     @State private var name: String
     @State private var mode: String

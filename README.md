@@ -1,46 +1,41 @@
 # Pip Files: local folder automation for macOS
 
-Pip Files is a native Swift macOS file organizer and folder-automation app. Choose a folder, create ordered rules, preview proposed file actions, then apply the changes you reviewed. It is an experimental original implementation inspired by Hazel's folder-rule workflow, not an affiliated product or a full Hazel replacement.
+Pip Files is an experimental native Swift app for organizing direct files in folders you select. Create ordered rules, preview proposed actions, and explicitly apply the changes you reviewed. This repository contains original workflow software informed by the Hazel folder-rules use case; it is not affiliated with Noodlesoft and does not claim full Hazel parity.
 
-Two declared editions share the same deterministic core: **Files Baseline** uses standard macOS presentation; **Pip Files** applies an original Paper/Ink Pip interface. Files Baseline is the generic partial workflow implementation in this repository, not a faithful Hazel recreation. Both are MIT licensed. Neither contains Hazel or Forel code, media, branding or reserved Pip motion code.
+The source provides four canonical configurations: **Files Replica** (`replica`) and **Files Baseline Plus** (`baseline-plus`) use an original neutral, manual-informed layout; **Pip Files** (`pip`) and **Pip Files Plus** (`pip-plus`) use the original Paper/Ink Pip interface. The older generic **Files Baseline** (`baseline`) remains a legacy build option. All variants share the same deterministic file-operation engine and keep separate app and data identities. The neutral layout is an original interpretation of public workflow references; the native Hazel rule workspace/editor was not observed, so “Replica” does not mean verified 1:1 fidelity.
 
-## Build and run
+## Build from source
 
-Requires macOS 14 or later and Apple's Xcode Command Line Tools with Swift Package Manager support for the declared Swift tools version 5.9. This development host uses Swift 6.4. The project targets Apple Silicon and Intel, but only macOS 27.0.1 arm64 has recorded native runtime acceptance. No account, model download, service, Python or third-party Swift package dependency.
+Requires macOS 14+, Apple’s Swift toolchain and Swift Package Manager. There are no external Swift package dependencies, account requirements, models, or hosted services. Run from the repository root:
 
 ```sh
 swift test --jobs 2
-./scripts/build.sh baseline
+./scripts/build.sh replica
+./scripts/build.sh baseline-plus
 ./scripts/build.sh pip
-open 'dist/Files Baseline.app'
-open 'dist/Pip Files.app'
+./scripts/build.sh pip-plus
 ```
 
-Run these commands from this repository root. Source builds are ad-hoc signed locally, not Developer ID signed or notarised. If you receive an app bundle outside the App Store, macOS may require its per-app Open confirmation; this repository currently has no downloadable binaries. Do not disable Gatekeeper globally.
+For one optional legacy package, use `./scripts/build.sh baseline`. The build script defaults to `pip`; pass a profile explicitly when building. Then open only the edition you chose, for example `open 'dist/Files Replica.app'`. Local builds are ad-hoc signed, not Developer ID signed or notarised. This repository currently publishes source and instructions, not downloadable app bundles. Do not disable Gatekeeper globally. See [Getting started](docs/GETTING-STARTED.md).
 
-For the step-by-step first run, see [Getting started](docs/GETTING-STARTED.md). For common questions about safety, data storage, macOS support and Hazel workflow gaps, see the [FAQ](docs/FAQ.md).
+Start with **Create sample folder**. It creates a disposable workspace in the app’s data directory, not in Downloads or Documents. Preview first and inspect sources, actions and destinations before Apply. See [safe first-run steps](docs/GETTING-STARTED.md) and the [FAQ](docs/FAQ.md).
 
-Start with **Create sample folder** (baseline: **Sample**). It creates a clearly labelled disposable workspace inside the app's own data directory, never your Downloads or Documents. Preview first. Review each source, action and destination; only press Apply when intended. After applying, History shows each action and any uncertain outcome. Undo refuses changed/replaced files or an occupied original path. Undo of Copy/ZIP moves the result into a journaled hidden sibling `.pip-files-undo-*` and keeps it; no automatic purge occurs. Reveal the recovery folder in History (Finder’s Command-Shift-Period shows hidden files). For multiple actions, undo newest first.
+## Workflow and safety limits
 
-## Rules and limits
+Rules apply to direct regular children of selected folders, without recursion or symlink following. Supported actions are Copy, Move, exact Rename, Finder tag and single-file ZIP. Existing destinations are not replaced. Preview is read-only; checks run again before Apply. Background rules are opt-in, run only while the app is open, and start paused on every launch.
 
-- Selected folders only, direct regular children; no recursion or symlink following.
-- Ordered first matching enabled rule, all/any extension/name/size/age conditions.
-- Copy, move, exact rename, Finder tag and ZIP archive, in visible action order. ZIP stores one file uncompressed, up to 128 MiB.
-- No replacement of existing paths, scripts, deletion rule or cloud processing. Moves/renames and their undo stay on the same filesystem; use Copy for another volume.
-- Preview is read-only. Freshness and destination checks run again before Apply.
-- Opt-in background rules run only while this app is open, on the selected folder, with age and repeated stable observations. Every launch starts paused. A stability window cannot prove every writer has finished; do not watch active download/build directories in this alpha.
-- History uses per-action write-ahead records. Unknown outcomes stop replay and need manual inspection of both paths. A multi-action rule is not an all-or-nothing filesystem transaction. Move/rename stages a file under a recorded hidden `.pip-files-stage-*` name before verification; interruption may leave it there. Uncooperative concurrent writers can still change names between checks: no atomic inode-conditional rename guarantee. History exposes uncertain paths; no automatic retry. App/process-interruption recovery is tested separately from unverified power-loss durability.
-- Full Hazel conditions, nested groups, content search, scripts, rule sharing, recursion, login daemon and advanced date/template actions are not implemented.
+This is an unsandboxed local app. Folder names, rules, bookmarks and history are stored locally and are not encrypted. A multi-action rule is not an all-or-nothing transaction; inspect uncertain history paths and keep backups. Undo of Copy/ZIP retains a hidden recovery file for manual inspection. Full Hazel conditions, nested groups, content search, scripts, recursion, rule sharing and a login daemon are not implemented. Read the [workflow comparison](docs/PARITY.md) before using anything beyond the sample.
 
-## Privacy and recovery
+Plus adds read-only History search, filters and explicit JSON/CSV report export. Reports can contain file paths, require a review/confirmation step, and are not restorable journals. Exports are local and never uploaded automatically.
 
-Core operations use local files only. No telemetry, updater, external connection or AI is included. Folder names, rule paths, scoped bookmarks and journal fingerprints are stored locally and are not encrypted. This is an unsandboxed desktop app; folder selection controls its own engine scope and does not imply macOS security sandboxing. Choose only test folders until comfortable with the alpha.
+## Data and edition identity
 
-Default data lives in `~/Library/Application Support/Pip Files` (baseline: `Files Baseline`), containing `folders.json`, `destination-grants.json` and `Journal/`. Unbundled development/test runs may set `PIP_FILES_DATA_DIR` to select a disposable data location. Packaged apps ignore that override and use the identity declared by their bundle marker; packaged launches also ignore `--baseline`. A bundle with a missing or unknown marker fails closed before opening saved data. Quit before backing up that directory. Restore the complete directory; do not edit journal records to force a retry. Corrupt data fails closed. Keep the data and inspect paths in Finder if recovery is uncertain. Removing a folder from the app preserves its files. Hidden recovery/staging files remain beside the affected files and consume disk space until you inspect/manage them yourself. Removing application data also removes history/undo information; preserve backups first.
+Packaged apps choose their appearance and saved-data directory from their embedded edition marker. Packaged apps ignore development CLI/environment overrides; a missing or unknown marker fails closed before opening saved data. Unbundled development/test runs may use `--baseline` and `PIP_FILES_DATA_DIR` to select isolated test data. See [Testing](docs/TESTING.md) for the evidence boundary.
 
-These are the **Neutral Core** and **Pip Core** variants. Neutral Plus and Pip Plus are proposed separately; this source does not contain their extra feature set. The [baseline preview](docs/images/baseline-preview.png), [Pip rule editor](docs/images/pip-editor.png), and [Pip history after undo](docs/images/pip-undo.png) show synthetic local test folders on the tested Mac. Preview behavior in Pip Core was also checked through the native accessibility tree; its screenshot is pending a valid recapture.
+## Evidence and provenance
 
-See [AI setup](docs/AI-SETUP.md), [verification and acceptance](docs/TESTING.md), [known workflow gaps](docs/PARITY.md), [code and research provenance](docs/REFERENCES.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), [security](SECURITY.md), and [proposed roadmap](docs/ROADMAP.md). The [`llms.txt`](llms.txt) file provides a factual link index for AI tools. [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
+The source and package tests cover file operations, recovery behavior, edition isolation and Plus report handling. The original bounded Core native workflow was exercised on macOS 27.0.1 arm64 at the earlier source commit recorded in [Testing](docs/TESTING.md); the current reference-style view and Plus interactions still need native acceptance. CI targets macOS 14, which is not evidence of native runtime acceptance on that OS or Intel.
 
-Maintained by [Ghostzy0](https://github.com/Ghostzy0), as part of Pip Reps. MIT. Please use GitHub issues for reproducible synthetic examples; do not attach private file paths, bookmarks or journals.
+See [AI setup](docs/AI-SETUP.md), [testing and acceptance](docs/TESTING.md), [parity limits](docs/PARITY.md), [research and provenance](docs/REFERENCES.md), [notices](THIRD-PARTY-NOTICES.md), [change notes](CHANGELOG.md), [security](SECURITY.md), and [roadmap](docs/ROADMAP.md). [`llms.txt`](llms.txt) is a factual link index for people and AI tools. [Hazel manual](https://www.noodlesoft.com/manual/hazel/) · [Forel source research](https://github.com/lab421/forel).
+
+Maintained by [Ghostzy0](https://github.com/Ghostzy0). MIT licensed. Use GitHub issues for reproducible synthetic examples; do not attach personal paths, bookmarks, journals or private reference captures.

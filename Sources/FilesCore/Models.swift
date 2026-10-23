@@ -84,7 +84,7 @@ public struct Preview: Codable, Sendable {
     public let rows: [PreviewRow]
 }
 
-public enum OperationState: String, Codable, Sendable { case intent, completed, failed, interrupted, undoIntent, undone }
+public enum OperationState: String, Codable, Hashable, Sendable { case intent, completed, failed, interrupted, undoIntent, undone }
 
 public struct OperationRecord: Codable, Identifiable, Sendable {
     public let id: UUID

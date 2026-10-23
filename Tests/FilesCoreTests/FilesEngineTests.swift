@@ -529,7 +529,7 @@ final class FilesEngineTests: XCTestCase {
         FilesEngine.afterIntentSavedForTesting = { raise(SIGSTOP) }
         defer { FilesEngine.afterIntentSavedForTesting = nil }
         _ = try crashEngine.apply(crashEngine.preview(config), config: config)
-        XCTFail("The child unexpectedly continued past the durable-intent barrier")
+        XCTFail("The child unexpectedly continued past the saved-intent barrier")
     }
 
     func testKilledProcessIntentBlocksReplayAfterRelaunch() throws {

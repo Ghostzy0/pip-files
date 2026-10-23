@@ -5,17 +5,6 @@ import FilesCore
 
 @MainActor
 final class AppStoreTests: XCTestCase {
-    func testPackagedEditionMarkerIsAuthoritativeAndMissingMarkersFailClosed() {
-        XCTAssertEqual(FeatureEdition.resolve(marker: "pip", packaged: true, arguments: ["--baseline"]), .pip)
-        XCTAssertEqual(FeatureEdition.resolve(marker: "baseline", packaged: true, arguments: []), .baseline)
-        XCTAssertNil(FeatureEdition.resolve(marker: nil, packaged: true, arguments: ["--baseline"]))
-        XCTAssertNil(FeatureEdition.resolve(marker: "unknown", packaged: true, arguments: []))
-        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app", "--baseline"]), .baseline)
-        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app"]), .pip)
-        XCTAssertNil(FeatureEdition.customDataPath("/tmp/override", packaged: true))
-        XCTAssertEqual(FeatureEdition.customDataPath("/tmp/override", packaged: false), "/tmp/override")
-    }
-
     private struct Fixture {
         let root: URL
         let input: URL
@@ -55,6 +44,56 @@ final class AppStoreTests: XCTestCase {
         XCTAssertFalse(conditionName(.maximumAge(value)).isEmpty)
     }
 
+    func testEditionMarkerIsAuthoritativeAndUnbundledOverrideIsIsolated() {
+        XCTAssertEqual(FeatureEdition.resolve(marker: "pip-plus", packaged: true, arguments: ["--baseline"]), .pipPlus)
+        XCTAssertEqual(FeatureEdition.resolve(marker: "replica", packaged: true, arguments: ["--baseline", "--replica"]), .replica)
+        XCTAssertNil(FeatureEdition.resolve(marker: "unknown", packaged: true, arguments: []))
+        XCTAssertNil(FeatureEdition.resolve(marker: nil, packaged: true, arguments: ["--baseline"]))
+        XCTAssertNil(FeatureEdition.resolve(marker: nil, packaged: true, arguments: ["--replica"]))
+        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app", "--baseline"]), .baseline)
+        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app", "--replica"]), .replica)
+        XCTAssertEqual(FeatureEdition.resolve(marker: nil, packaged: false, arguments: ["app"]), .pip)
+        XCTAssertNil(FeatureEdition.dataDirectoryOverride(environmentValue: "/tmp/redirect", packaged: true))
+        XCTAssertEqual(FeatureEdition.dataDirectoryOverride(environmentValue: "/tmp/test-data", packaged: false)?.path,
+                       "/tmp/test-data")
+    }
+
+    func testCanonicalFourAndLegacyEditionHaveUniqueIdentities() {
+        let editions = FeatureEdition.allCases
+        XCTAssertEqual(editions.count, 5)
+        XCTAssertEqual(Set(editions.map(\.name)).count, 5)
+        XCTAssertEqual(Set(editions.map(\.bundleIdentifier)).count, 5)
+        XCTAssertEqual(Set(editions.map(\.rawValue)).count, 5)
+        XCTAssertEqual(Set(editions.map { $0.dataDirectoryName(packaged: true) }).count, 5)
+        XCTAssertEqual(Set(editions.map { $0.dataDirectoryName(packaged: false) }).count, 5)
+        XCTAssertEqual(Set(editions.map(\.version)), ["0.1.0", "0.2.0"])
+        XCTAssertEqual(Set(editions.map(\.baseline)), [false, true])
+        XCTAssertEqual(Set(editions.map(\.enhanced)), [false, true])
+        XCTAssertEqual(Set(FeatureEdition.releaseEditions), [.replica, .baselinePlus, .pip, .pipPlus])
+        XCTAssertEqual(FeatureEdition.releaseEditions.count, 4)
+        XCTAssertFalse(FeatureEdition.releaseEditions.contains(.baseline))
+        XCTAssertEqual(FeatureEdition.releaseEditions.filter(\.referenceLayout).count, 2)
+        XCTAssertTrue(FeatureEdition.replica.referenceLayout)
+        XCTAssertTrue(FeatureEdition.baselinePlus.referenceLayout)
+        XCTAssertFalse(FeatureEdition.pip.referenceLayout)
+        XCTAssertFalse(FeatureEdition.pipPlus.referenceLayout)
+    }
+
+    func testAddFolderCommandCannotDiscardUnsavedReplicaRuleChanges() throws {
+        let f = try fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        let originalFolderCount = f.store.folders.count
+        let originalSelection = f.store.selected
+        f.store.hasUnsavedRuleChanges = true
+
+        // The app-wide Cmd+O command calls addFolder() directly, bypassing view routing.
+        f.store.addFolder()
+
+        XCTAssertEqual(f.store.folders.count, originalFolderCount)
+        XCTAssertEqual(f.store.selected, originalSelection)
+        XCTAssertEqual(f.store.message, "Save or discard the unsaved rule before adding a folder.")
+    }
+
     func testOpeningRuleEditorPausesWatchAndInvalidatesReviewedPlan() throws {
         let f = try fixture()
         defer { try? FileManager.default.removeItem(at: f.root) }
@@ -68,6 +107,26 @@ final class AppStoreTests: XCTestCase {
         XCTAssertNil(f.store.preview)
         XCTAssertEqual(f.store.editor?.rule.id, f.config.rules[0].id)
         XCTAssertFalse(FileManager.default.fileExists(atPath: f.output.appendingPathComponent("receipt.txt").path))
+    }
+
+    func testManualPreviewPausesWatchAndLeavesFilesUnchanged() async throws {
+        let f = try fixture()
+        defer { try? FileManager.default.removeItem(at: f.root) }
+        f.store.watching = true
+
+        f.store.check()
+
+        XCTAssertFalse(f.store.watching)
+        // Allow the real asynchronous preview to finish, then prove it produced
+        // a ready plan without invoking the automatic Apply path.
+        for _ in 0..<200 where f.store.busy {
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
+        XCTAssertFalse(f.store.busy)
+        XCTAssertEqual(f.store.preview?.rows.first?.status, .ready)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: f.source.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: f.output.appendingPathComponent("receipt.txt").path))
+        XCTAssertTrue(f.store.records.isEmpty)
     }
 
     func testFailedConfigSaveDisablesCheckApplyUndoAndRejectsRuleDraft() throws {

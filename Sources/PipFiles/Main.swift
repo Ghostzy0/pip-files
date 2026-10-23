@@ -11,19 +11,20 @@ final class FilesAppDelegate:NSObject,NSApplicationDelegate {
     @StateObject private var store = AppStore()
     @AppStorage("pip.files.theme") private var look = "paper"
     @AppStorage("pip.files.appearance") private var appearance = "light"
-    private var baseline:Bool { FeatureEdition.selected?.baseline ?? true }
+    private var baseline:Bool {FeatureEdition.current.baseline}
     private var palette:PipPalette {PipPalette(dark:appearance == "dark",oat:look == "oat")}
     var body: some Scene {
         WindowGroup {
             Group {
-                if FeatureEdition.selected?.baseline != false { BaselineView() }
+                if FeatureEdition.current.referenceLayout { HazelReplicaView() }
+                else if baseline { BaselineView() }
                 else { PipView() }
             }.environmentObject(store)
                 .frame(minWidth:900,minHeight:620)
                 .onDisappear {store.pauseBackground()}
                 .onChange(of:store.selected) { _, _ in if store.watching {store.pauseBackground()};store.preview = nil; store.watching = false; store.showHistory = false }
                 .onChange(of:store.showHistory) { _, showing in if showing {if store.watching {store.message = "Background rules paused while viewing History."};store.watching = false;store.preview = nil} }
-                .sheet(item:$store.editor) {draft in
+                .sheet(item:Binding(get:{FeatureEdition.current.referenceLayout ? nil : store.editor},set:{if !FeatureEdition.current.referenceLayout { store.editor = $0 }})) {draft in
                     Group {
                         if baseline {RuleEditor(draft:draft).environmentObject(store)}
                         else {RuleEditor(draft:draft).environmentObject(store).tint(palette.ink).preferredColorScheme(appearance == "dark" ? .dark:.light).background(palette.canvas)}
@@ -37,7 +38,7 @@ final class FilesAppDelegate:NSObject,NSApplicationDelegate {
                 Button("Preview") {store.check()}.keyboardShortcut("p",modifiers:[.command,.option]).disabled(store.current == nil || store.busy)
                 Button("Pause background rules") {store.pauseBackground()}.keyboardShortcut(".")
             }
-            CommandGroup(replacing:.appInfo) {Button(baseline ? "About Files Baseline":"About Pip Files") {NSApplication.shared.orderFrontStandardAboutPanel(options:[.applicationName:baseline ? "Files Baseline":"Pip Files",.applicationVersion:"0.1.0-alpha.1",.credits:NSAttributedString(string:"Original local folder automation by Pip Reps\nMaintainer: Ghostzy0\nMIT · Experimental · macOS 14+\nhttps://github.com/Ghostzy0/pip-files\nHazel is a workflow reference. No affiliation.")])}}
+            CommandGroup(replacing:.appInfo) {Button("About \(FeatureEdition.current.name)") {NSApplication.shared.orderFrontStandardAboutPanel(options:[.applicationName:FeatureEdition.current.name,.applicationVersion:FeatureEdition.current.version,.credits:NSAttributedString(string:"Original local folder automation by Pip Reps\nMaintainer: Ghostzy0\nMIT · Experimental · macOS 14+\nhttps://github.com/Ghostzy0/pip-files\nHazel is a workflow reference. No affiliation.")])}}
         }
     }
 }
@@ -94,11 +95,21 @@ struct PreviewList: View {
     }
 }
 struct HistoryList: View {
+    var body: some View {
+        if FeatureEdition.current.enhanced { EnhancedHistory() }
+        else { HistoryRows() }
+    }
+}
+
+struct HistoryRows: View {
     @EnvironmentObject var store: AppStore
+    var records: [OperationRecord]? = nil
+    var emptyMessage: String? = nil
+    private var visibleRecords: [OperationRecord] {records ?? store.records}
     var body: some View {
             LazyVStack(alignment:.leading,spacing:12) {
-                if store.records.isEmpty {Text(store.storageHealthy ? "No operations yet. Applied changes and recovery details appear here." : "History is unavailable. Saved records are kept. Reopen after checking the data folder.").foregroundStyle(.secondary)}
-                ForEach(store.records) {record in
+                if visibleRecords.isEmpty {Text(emptyMessage ?? (store.storageHealthy ? "No operations yet. Applied changes and recovery details appear here." : "History is unavailable. Saved records are kept. Reopen after checking the data folder.")).foregroundStyle(.secondary)}
+                ForEach(visibleRecords) {record in
                     VStack(alignment:.leading,spacing:4) {
                         HStack {Text(URL(fileURLWithPath:record.sourcePath).lastPathComponent).fontWeight(.semibold);Spacer();Text(record.state.rawValue.capitalized).font(.caption);if record.state == .completed && !store.records.contains(where: {$0.rowID == record.rowID && $0.state == .completed && $0.createdAt > record.createdAt}) {Button("Undo") {store.undo(record.id)}.disabled(store.busy)}}
                         Text(actionName(record.action)).textSelection(.enabled)

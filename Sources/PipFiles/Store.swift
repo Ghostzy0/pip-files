@@ -13,6 +13,7 @@ import FilesCore
     @Published var watching = false
     @Published var showHistory = false
     @Published var editor: RuleDraft?
+    @Published var hasUnsavedRuleChanges = false
     let root: URL
     private var engine: FilesEngine!
     private let worker = DispatchQueue(label: "com.pipreps.files.engine", qos: .userInitiated)
@@ -25,11 +26,13 @@ import FilesCore
     var configURL: URL { root.appendingPathComponent("folders.json") }
 
     init() {
-        let custom = FeatureEdition.customDataPath(ProcessInfo.processInfo.environment["PIP_FILES_DATA_DIR"], packaged: FeatureEdition.packaged)
-        let edition = FeatureEdition.selected
-        root = custom.map { URL(fileURLWithPath: $0) } ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(edition?.dataDirectoryName ?? "Pip Files Invalid Configuration")
-        guard edition != nil else {
-            message = "This package has a missing or invalid edition marker. Saved rules were not opened."
+        let custom = FeatureEdition.dataDirectoryOverride(
+            environmentValue: ProcessInfo.processInfo.environment["PIP_FILES_DATA_DIR"],
+            packaged: FeatureEdition.packaged)
+        let editionName = FeatureEdition.dataDirectoryName
+        root = custom ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent(editionName)
+        guard FeatureEdition.selected != nil else {
+            message = "This package has an invalid edition marker. Open a verified package. Saved rules were not opened."
             return
         }
         do {
@@ -71,6 +74,10 @@ import FilesCore
         preview = nil; signatures.removeAll()
     }
     func addFolder(sample: Bool = false) {
+        guard !hasUnsavedRuleChanges else {
+            message = "Save or discard the unsaved rule before adding a folder."
+            return
+        }
         guard !busy, storageHealthy else { return }
         watching = false; preview = nil; signatures.removeAll()
         if sample {
@@ -140,6 +147,9 @@ import FilesCore
     }
     func check() {
         guard let folder = current, !busy, storageHealthy, engine != nil else { return }
+        // A manual review must not overlap automatic mutations. In-flight
+        // background observations recheck watching before they can apply.
+        watching = false; signatures.removeAll()
         busy = true; message = "Checking files. Nothing is being changed."
         worker.async { [self, engine = engine!] in
             do { let result = try engine.preview(folder); Task { @MainActor in if self.selected == folder.id { self.preview = result }; self.busy = false; self.message = "Preview ready. Review every change before applying." } }

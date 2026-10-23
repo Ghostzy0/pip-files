@@ -1,10 +1,10 @@
 # Research and provenance
 
-Pip Files is original MIT Swift code using Apple system frameworks only. No referenced project is embedded or required to build.
+Pip Files is original MIT Swift source using Apple system frameworks. No external project is embedded or required to build.
 
-- [Hazel](https://www.noodlesoft.com/hazel/) and its [official manual](https://www.noodlesoft.com/manual/hazel/) are the recognizable folder-rule workflow reference. Native trial inspection remains pending evaluation-agreement acceptance; documentation is not an observation claim.
-- [Forel 8b7e094](https://github.com/lab421/forel/commit/8b7e094ef9c8f38b3433f28d3c7eaf2a7d3899b0), GPL-3.0-or-later with brand/look carve-outs. Pinned original source compiled locally. Its licensing dependency's reuse terms remained unresolved, so no code/assets were imported.
-- [Hazelnut 72dac6d](https://github.com/ricardodantas/hazelnut/commit/72dac6de91be2fc1c1043efb22b62d4dcd4036e2), GPL Rust TUI/daemon; no native GUI foundation imported.
-- [organize a736516](https://github.com/tfeldmann/organize/commit/a736516555d0daeb83a604448fbdf5379f42f2ef), MIT Python CLI with sim/run; no runtime/imported dependency.
+- [Hazel](https://www.noodlesoft.com/hazel/) and its [official manual](https://www.noodlesoft.com/manual/hazel/) inform the folder-rule workflow and neutral layout. The native Hazel rule workspace/editor has not been observed; manual documentation is not native parity evidence.
+- [Forel](https://github.com/lab421/forel) is GPL-3.0-or-later with additional brand/look carve-outs. Its reuse terms were not selected for this project; no code or assets are imported.
+- [Hazelnut](https://github.com/ricardodantas/hazelnut) is a GPL Rust TUI/daemon; no code is imported.
+- [organize](https://github.com/tfeldmann/organize) is an MIT Python CLI; no runtime or imported dependency is used.
 
-A small original Swift core was selected for auditability of deterministic previews, descriptor-based file boundaries, write-ahead history and native UI integration. GPL reuse was an available licensed option; no claim that GPL itself prevents reuse. Original Pip character/icon drawing is app-authored code, not a reserved animation-engine import. System font only; no hosted font/asset/model payload.
+A small original Swift core supports deterministic previews, descriptor-based file boundaries, write-ahead history and native UI integration. Pip character and icon drawing are authored for this app; no reserved animation-engine code is included. The project uses system fonts and has no hosted font, asset, model or service dependency.
