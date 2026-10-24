@@ -24,9 +24,9 @@ There is no complete Hazel parity, universal safety or accessibility claim. No d
 
 ## Dated source, test, build, and CI evidence
 
-### Local test run · 23 October 2026
+### Local test run · 24 October 2026
 
-On macOS 27.0.1 arm64, `swift test --jobs 2` passed 50 active tests, one expected child-helper test was skipped, and there were zero failures. The local source and test inputs were later byte-verified against public code commit `988769630e3a1d31a3046c0390801479cfccede3`. This local test command was not run in a fresh public checkout.
+On 24 October 2026, a local macOS 27.0.1 arm64 run passed 50 active tests plus one expected helper skip. Its 36 app/test/build inputs were verified byte-identical to public source `988769630e3a1d31a3046c0390801479cfccede3`; the local test command was not run in a fresh public checkout.
 
 ### Public candidate builds · 24 October 2026
 
