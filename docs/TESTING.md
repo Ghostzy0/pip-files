@@ -14,7 +14,7 @@ A later integrated Plus/reference checkpoint passed 49 active tests, with one ex
 
 ## Known open gates
 
-- Native acceptance of the edition-isolation fix and the current reference-style and Plus UI.
+- Native acceptance remains partial. The 24 October 2026 minimum-window Plus disclosure/error-layout and bounded report review/save/cancel/no-overwrite slice passed. Neutral Plus Return-key activation of Save JSON remains open in [issue #8](https://github.com/Ghostzy0/pip-files/issues/8). Current-source Core and Replica native workflows, full keyboard/accessibility checks, and direct same-input Hazel workspace/editor comparison remain pending.
 - Observation of the native Hazel rule workspace/editor; the neutral layout is manual-informed, not verified faithful recreation.
 - Runtime on Intel and macOS 14, VoiceOver/Full Keyboard Access across controls, removable-volume/revoked-grant behavior, and actual power-loss durability.
 - Developer ID signing and notarisation.
@@ -22,8 +22,16 @@ A later integrated Plus/reference checkpoint passed 49 active tests, with one ex
 There is no complete Hazel parity, universal safety or accessibility claim. No downloadable app bundle is published here. See [release notes](RELEASE-NOTES.md) and [workflow gaps](PARITY.md).
 
 
-## Fresh public-export validation · 23 October 2026
+## Dated source, test, build, and CI evidence
 
-A fresh public-repository export of the source included in this PR passed `swift test --jobs 2` on macOS 27.0.1 arm64 with 50 tests passing, one expected child-helper skip, and zero failures. Each canonical profile (`replica`, `baseline-plus`, `pip`, `pip-plus`) built; all four embedded edition markers matched the requested profile, and each app passed `codesign --verify --deep --strict`. The build script strips debug symbols and fails closed if the packaged executable still contains checkout or home-directory paths.
+### Local test run · 24 October 2026
 
-Hosted macOS 14 CI passed for this PR's tested source snapshot, including the four builds ([run 39891534765](https://github.com/Ghostzy0/pip-files/actions/runs/39891534765)). No app was launched during this validation slice. Native acceptance of the edition-isolation, manual-review/watch, neutral-view and Plus changes remains pending. No binary is published by this source PR; see the live pull request for the current CI status.
+On 24 October 2026, a local macOS 27.0.1 arm64 run passed 50 active tests plus one expected helper skip. Its 36 app/test/build inputs were verified byte-identical to public source `988769630e3a1d31a3046c0390801479cfccede3`; the local test command was not run in a fresh public checkout.
+
+### Public candidate builds · 24 October 2026
+
+A fresh public export at custom code commit `988769630e3a1d31a3046c0390801479cfccede3` produced the custom `baseline-plus`, `pip`, and `pip-plus` candidates. The separate neutral Replica candidate was built from `pip-files-replica` at `f5fa7edea79d984541c3efdfbe4af419d8e90e64`. These package builds do not imply app launch or native workflow acceptance.
+
+### Hosted CI
+
+Hosted macOS 14 CI passed its test and four-profile build workflow at exact custom code commit `988769630e3a1d31a3046c0390801479cfccede3` ([run 40117704192](https://github.com/Ghostzy0/pip-files/actions/runs/40117704192)). The current main merge `2e9aa59fac2f033b75778c4a8dd6a0cab01b3ccd` also passed hosted CI ([run 40119435892](https://github.com/Ghostzy0/pip-files/actions/runs/40119435892)); comparison with `988769630e3a1d31a3046c0390801479cfccede3` shows only `CHANGELOG.md` and `SOURCE-MANIFEST.json` changed, with no source-code changes. CI does not launch an app. These results do not establish macOS 14 runtime acceptance, Intel support, or full native workflow acceptance. No downloadable binary is published.
