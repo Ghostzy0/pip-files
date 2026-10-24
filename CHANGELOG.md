@@ -2,6 +2,8 @@
 
 ## Unreleased · experimental source integration
 
+- Generated custom app bundles now include the repository `LICENSE` and `THIRD-PARTY-NOTICES.md` under `Contents/Resources` before code signing. This carries the notice text with each app for offline inspection; it makes no broader legal-compliance claim. Fresh package verification and native acceptance remain pending. See [issue #11](https://github.com/Ghostzy0/pip-files/issues/11).
+
 - The neutral Replica preview now gives guidance that stays accurate before and after Apply: review proposed changes first; applied actions are recorded in History. This copy-only correction addresses [Replica issue #5](https://github.com/Ghostzy0/pip-files-replica/issues/5). A new native Move → Apply → History → Undo retest remains pending.
 
 - The Plus export sheet keeps privacy disclosures and save errors in a bounded scroll region. At the minimum supported window, 24 October native visual checks of Pip Plus and Neutral Plus showed the full disclosures and all three controls in normal and refused-replacement states; refusal preserved the existing report bytes. Broader native and keyboard acceptance remains open. Neutral Plus Return activation remains under investigation in [issue #8](https://github.com/Ghostzy0/pip-files/issues/8); the layout change addresses the truncation reported in [issue #6](https://github.com/Ghostzy0/pip-files/issues/6).
