@@ -3,7 +3,7 @@
   ".github/pull_request_template.md": "c1de507c22c74c2dcca60a6e93cbf1dcf13fc07e46f8e904dcf0a9d446117dc7",
   ".github/workflows/ci.yml": "6a961b95b8f8c5dde610c96d3198df831d4ed98dd8fc01cf724f7d85e54ec4ac",
   ".gitignore": "98804de6e29b7725bc34939e01238c284295712d325fef53c41e0b7bb4ab1bb8",
-  "CHANGELOG.md": "e7af63140a779375c55ba9f65c5fe8e3082b44447d8d61a7a5230c2ffdca1d1e",
+  "CHANGELOG.md": "d6a61b629c17b258188eee52770dffa0225dcbee6f4f8465c1017de7598207c6",
   "CONTRIBUTING.md": "1ce5a319cfb2497749b398a88801c3742a989386b37f8e29db6b46bbb68a33b3",
   "LICENSE": "8ced19fdd4fec3ef11452c8532e4ee502916530be6eea2a069cfcacccef0ae91",
   "Package.swift": "d0d84d95eaf442df16f10c841c9f3d27f371eb8752a21e3de1fd37ff21661574",
