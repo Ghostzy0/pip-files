@@ -2,6 +2,8 @@
 
 ## Unreleased · experimental source integration
 
+- The Plus export confirmation places its disclosures and save errors in a bounded scroll region so a refused replacement does not compress the privacy copy. Native verification at the minimum window remains pending; see [issue #6](https://github.com/Ghostzy0/pip-files/issues/6).
+
 Adds a neutral manual-informed view and editor shared by the `replica` and `baseline-plus` profiles, plus History search, filters and explicitly reviewed local JSON/CSV reports in the two Plus profiles. Core file-operation behavior is shared. Packaged editions use separate bundle and data identities, with edition isolation and packaged-path privacy checks. This is a source update, not a binary release. Current CI, native acceptance and release gates are tracked in [Testing](docs/TESTING.md). History count, empty-state, timestamp and issue captions now use stronger contrast in the reference layout and Core fallback; Plus report notices retain their edition palette.
 
 ## 0.1.0-alpha.1 · historical Core workflow
