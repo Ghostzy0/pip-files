@@ -22,8 +22,16 @@ A later integrated Plus/reference checkpoint passed 49 active tests, with one ex
 There is no complete Hazel parity, universal safety or accessibility claim. No downloadable app bundle is published here. See [release notes](RELEASE-NOTES.md) and [workflow gaps](PARITY.md).
 
 
-## Fresh public-export validation · 24 October 2026
+## Dated source, test, build, and CI evidence
 
-A fresh clean public-source export at tested code commit `988769630e3a1d31a3046c0390801479cfccede3` passed `swift test --jobs 2` on macOS 27.0.1 arm64: 50 active tests passed, one expected child-helper test was skipped, and there were zero failures. All four canonical profiles (`replica`, `baseline-plus`, `pip`, `pip-plus`) built; their embedded edition markers matched the requested profiles, strict/deep ad-hoc signature verification passed, and the build-script path/privacy check passed.
+### Local test run · 23 October 2026
 
-Hosted macOS 14 CI passed at that exact tested code commit ([run 40117704192](https://github.com/Ghostzy0/pip-files/actions/runs/40117704192)). The current main merge `2e9aa59fac2f033b75778c4a8dd6a0cab01b3ccd` also passed hosted CI ([run 40119435892](https://github.com/Ghostzy0/pip-files/actions/runs/40119435892)); comparison with tested commit `988769630e3a1d31a3046c0390801479cfccede3` shows only `CHANGELOG.md` and `SOURCE-MANIFEST.json` changed, with no source-code changes. CI runs tests and package builds; it does not launch an app. These results do not establish macOS 14 runtime acceptance, Intel support, or full native workflow acceptance. No downloadable binary is published.
+On macOS 27.0.1 arm64, `swift test --jobs 2` passed 50 active tests, one expected child-helper test was skipped, and there were zero failures. The local source and test inputs were later byte-verified against public code commit `988769630e3a1d31a3046c0390801479cfccede3`. This local test command was not run in a fresh public checkout.
+
+### Public candidate builds · 24 October 2026
+
+A fresh public export at custom code commit `988769630e3a1d31a3046c0390801479cfccede3` produced the custom `baseline-plus`, `pip`, and `pip-plus` candidates. The separate neutral Replica candidate was built from `pip-files-replica` at `f5fa7edea79d984541c3efdfbe4af419d8e90e64`. These package builds do not imply app launch or native workflow acceptance.
+
+### Hosted CI
+
+Hosted macOS 14 CI passed its test and four-profile build workflow at exact custom code commit `988769630e3a1d31a3046c0390801479cfccede3` ([run 40117704192](https://github.com/Ghostzy0/pip-files/actions/runs/40117704192)). The current main merge `2e9aa59fac2f033b75778c4a8dd6a0cab01b3ccd` also passed hosted CI ([run 40119435892](https://github.com/Ghostzy0/pip-files/actions/runs/40119435892)); comparison with `988769630e3a1d31a3046c0390801479cfccede3` shows only `CHANGELOG.md` and `SOURCE-MANIFEST.json` changed, with no source-code changes. CI does not launch an app. These results do not establish macOS 14 runtime acceptance, Intel support, or full native workflow acceptance. No downloadable binary is published.
