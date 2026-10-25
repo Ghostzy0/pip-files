@@ -22,6 +22,16 @@ open 'dist/Files Replica.app'
 
 Choose one profile: `replica`, `baseline-plus`, `pip`, or `pip-plus`. The legacy generic package uses `baseline`. Replace the example with only the edition you intend to open. Local builds are ad-hoc signed; this repository does not publish binaries and the app is not notarised. Do not disable Gatekeeper globally.
 
+### Select a Swift build backend when needed
+
+The script uses Swift's default backend when `PIP_FILES_BUILD_SYSTEM` is unset. On 25 October 2026, the host's default `swiftbuild` Release path stalled during `dsymutil`; the installed `swift build --help` listed `native`, `swiftbuild`, and `xcode` as supported backends. To retry with Swift's native backend:
+
+```sh
+PIP_FILES_BUILD_SYSTEM=native ./scripts/build.sh baseline-plus
+```
+
+This selects only Swift's build backend. The normal Release configuration, stripping, local-path scan, notice copying, code signing, signature verification, and atomic promotion still run. A successful command and package checks are required; the fallback is not itself evidence of a completed build.
+
 ## Try the disposable sample
 
 1. Open one edition and choose **Create sample folder**.

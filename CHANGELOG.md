@@ -2,6 +2,8 @@
 
 ## Unreleased · experimental source integration
 
+- The packaging script accepts the validated `PIP_FILES_BUILD_SYSTEM` values `native`, `swiftbuild`, and `xcode`; leaving the variable unset preserves Swift’s tool default. Setup documents the native backend fallback after the observed host `dsymutil` stall. This is a build-path option only; Neutral Plus source and native acceptance remain unchanged and pending. [Related issue](https://github.com/Ghostzy0/pip-files/issues/13).
+
 - Neutral Plus now protects dirty inline rule drafts on app Quit and window close with a Keep Editing default/cancel action and explicit Discard Changes choice. Native retest of the exact Neutral Plus candidate remains pending; this source update does not establish acceptance. Related: [issue #13](https://github.com/Ghostzy0/pip-files/issues/13).
 
 - Custom app bundles include the repository `LICENSE` and `THIRD-PARTY-NOTICES.md` under `Contents/Resources` before code signing. Pip Core, Pip Plus and Neutral Plus candidates were built from public-source head `8d094ec7729e3be983ea8d23ac5c1589fd28436f` on macOS 27.0.1 arm64. A fresh package restore on 25 October verified archive structure and CRCs, bundle identities, executable hashes and modes, source-matched notice bytes, and ad-hoc signatures with strict deep verification. This is package verification only: these exact candidates have not been run in the native GUI, and native acceptance and binary release gates remain pending. This makes no broader legal-compliance claim. See [issue #11](https://github.com/Ghostzy0/pip-files/issues/11).
