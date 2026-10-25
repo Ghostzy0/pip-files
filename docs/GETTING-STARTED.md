@@ -22,6 +22,16 @@ open 'dist/Files Replica.app'
 
 Choose one profile: `replica`, `baseline-plus`, `pip`, or `pip-plus`. The legacy generic package uses `baseline`. Replace the example with only the edition you intend to open. Local builds are ad-hoc signed; this repository does not publish binaries and the app is not notarised. Do not disable Gatekeeper globally.
 
+### Release build symbols
+
+The packaging script uses Swift's normal backend selection and builds Release without DWARF debug information:
+
+```sh
+./scripts/build.sh baseline-plus
+```
+
+This follows repeated local stalls during `dsymutil` with both tested Swift build backends; the cause has not been established. The Release build still uses normal optimization and proceeds through stripping, the local-path scan, notice copying, code signing, signature verification, and atomic promotion. The Debug configuration remains available for local diagnostics with debug information. A successful command and package checks are required; changing the symbol format is not itself evidence of a completed build.
+
 ## Try the disposable sample
 
 1. Open one edition and choose **Create sample folder**.
