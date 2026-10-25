@@ -2,7 +2,7 @@
 
 ## Unreleased · experimental source integration
 
-- The packaging script accepts the validated `PIP_FILES_BUILD_SYSTEM` values `native`, `swiftbuild`, and `xcode`; leaving the variable unset preserves Swift’s tool default. Setup documents the native backend fallback after the observed host `dsymutil` stall. A bounded native-backend retry of Neutral Plus on this host also stalled during `dsymutil` before bundle assembly; no bundle was produced and no root cause is established. This is a build-path option only; Neutral Plus source and native acceptance remain unchanged and pending. [Related issue](https://github.com/Ghostzy0/pip-files/issues/13).
+- Release packaging now uses SwiftPM's default backend with `-debug-info-format none` after both attempted backends stalled during `dsymutil` on this host. The root cause remains unknown; the earlier attempts produced no verified package. The Release script still performs stripping, local-path scanning, notice copying, signing, signature verification and atomic promotion. Debug builds remain available for diagnostics. Neutral Plus package and native acceptance remain pending. [Related issue](https://github.com/Ghostzy0/pip-files/issues/13).
 
 - Neutral Plus now protects dirty inline rule drafts on app Quit and window close with a Keep Editing default/cancel action and explicit Discard Changes choice. Native retest of the exact Neutral Plus candidate remains pending; this source update does not establish acceptance. Related: [issue #13](https://github.com/Ghostzy0/pip-files/issues/13).
 
