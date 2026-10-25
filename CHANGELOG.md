@@ -2,7 +2,7 @@
 
 ## Unreleased · experimental source integration
 
-- Generated custom app bundles now include the repository `LICENSE` and `THIRD-PARTY-NOTICES.md` under `Contents/Resources` before code signing. This carries the notice text with each app for offline inspection; it makes no broader legal-compliance claim. Fresh package verification and native acceptance remain pending. See [issue #11](https://github.com/Ghostzy0/pip-files/issues/11).
+- Custom app bundles include the repository `LICENSE` and `THIRD-PARTY-NOTICES.md` under `Contents/Resources` before code signing. Pip Core, Pip Plus and Neutral Plus candidates were built from public-source head `8d094ec7729e3be983ea8d23ac5c1589fd28436f` on macOS 27.0.1 arm64. A fresh package restore on 25 October verified archive structure and CRCs, bundle identities, executable hashes and modes, source-matched notice bytes, and ad-hoc signatures with strict deep verification. This is package verification only: these exact candidates have not been run in the native GUI, and native acceptance and binary release gates remain pending. This makes no broader legal-compliance claim. See [issue #11](https://github.com/Ghostzy0/pip-files/issues/11).
 
 - The neutral Replica preview now gives guidance that stays accurate before and after Apply: review proposed changes first; applied actions are recorded in History. This copy-only correction addresses [Replica issue #5](https://github.com/Ghostzy0/pip-files-replica/issues/5). A new native Move → Apply → History → Undo retest remains pending.
 
