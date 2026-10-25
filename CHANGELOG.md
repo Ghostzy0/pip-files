@@ -2,6 +2,8 @@
 
 ## Unreleased · experimental source integration
 
+- Custom app bundles include the repository `LICENSE` and `THIRD-PARTY-NOTICES.md` under `Contents/Resources` before code signing. Pip Core, Pip Plus and Neutral Plus candidates were built from public-source head `8d094ec7729e3be983ea8d23ac5c1589fd28436f` on macOS 27.0.1 arm64. A fresh package restore on 25 October verified archive structure and CRCs, bundle identities, executable hashes and modes, source-matched notice bytes, and ad-hoc signatures with strict deep verification. This is package verification only: these exact candidates have not been run in the native GUI, and native acceptance and binary release gates remain pending. This makes no broader legal-compliance claim. See [issue #11](https://github.com/Ghostzy0/pip-files/issues/11).
+
 - The neutral Replica preview now gives guidance that stays accurate before and after Apply: review proposed changes first; applied actions are recorded in History. This copy-only correction addresses [Replica issue #5](https://github.com/Ghostzy0/pip-files-replica/issues/5). A new native Move → Apply → History → Undo retest remains pending.
 
 - The Plus export sheet keeps privacy disclosures and save errors in a bounded scroll region. At the minimum supported window, 24 October native visual checks of Pip Plus and Neutral Plus showed the full disclosures and all three controls in normal and refused-replacement states; refusal preserved the existing report bytes. Broader native and keyboard acceptance remains open. Neutral Plus Return activation remains under investigation in [issue #8](https://github.com/Ghostzy0/pip-files/issues/8); the layout change addresses the truncation reported in [issue #6](https://github.com/Ghostzy0/pip-files/issues/6).

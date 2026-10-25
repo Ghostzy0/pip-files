@@ -3,7 +3,7 @@
   ".github/pull_request_template.md": "c1de507c22c74c2dcca60a6e93cbf1dcf13fc07e46f8e904dcf0a9d446117dc7",
   ".github/workflows/ci.yml": "6a961b95b8f8c5dde610c96d3198df831d4ed98dd8fc01cf724f7d85e54ec4ac",
   ".gitignore": "98804de6e29b7725bc34939e01238c284295712d325fef53c41e0b7bb4ab1bb8",
-  "CHANGELOG.md": "f1d60d8ea91ac7360b2e8b28e1089f9e63abe3567a0ee0fa0379c42fd9bddba8",
+  "CHANGELOG.md": "0eb79af87e62e5a5b21127c6d55893ce24ac9d3b844023ed6b73094cc22ecc80",
   "CONTRIBUTING.md": "1ce5a319cfb2497749b398a88801c3742a989386b37f8e29db6b46bbb68a33b3",
   "LICENSE": "8ced19fdd4fec3ef11452c8532e4ee502916530be6eea2a069cfcacccef0ae91",
   "Package.swift": "d0d84d95eaf442df16f10c841c9f3d27f371eb8752a21e3de1fd37ff21661574",
@@ -41,7 +41,7 @@
   "docs/images/pip-editor.png": "d9a150d30e5b5fb0dac9649d47f826023cb99a4e4b7f2ee59a92b88cadac046d",
   "docs/images/pip-undo.png": "b4176103a6ba11f8eedb018dc51d45082942a037336c9cf80c88fedb1ca14066",
   "llms.txt": "a9c095f830989416e3becc4cd444a821b79e3f6d1f10c9dee57f897f742c97e0",
-  "scripts/build.sh": "a9634fc5b0daf481466aa596c0539d17bb70bb3442a8a88b1fdd5bdf48478eb1",
+  "scripts/build.sh": "948ee32bf7d0690262279771d7c98cd078fa7e884c576069a3b967245b5aa605",
   "scripts/icon.swift": "ba939a818e3621ec6650df025c380fdb602c4a7a97f3eadeb4836017a00e3c3c",
   "scripts/promote.swift": "b9c42f6deb4bf115e1f21b097937526eed3e1f3136dcb3d95245255669640cc4",
   "scripts/test-promote.sh": "840571a025a6f836bc2805e163b8c17a00ce6dfa2e5cc69ee31ab2cc8d0d2e33"
