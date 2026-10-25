@@ -30,7 +30,7 @@ The script uses Swift's default backend when `PIP_FILES_BUILD_SYSTEM` is unset. 
 PIP_FILES_BUILD_SYSTEM=native ./scripts/build.sh baseline-plus
 ```
 
-This selects only Swift's build backend. The normal Release configuration, stripping, local-path scan, notice copying, code signing, signature verification, and atomic promotion still run. A successful command and package checks are required; the fallback is not itself evidence of a completed build.
+This selects only Swift's build backend. The normal Release configuration, stripping, local-path scan, notice copying, code signing, signature verification, and atomic promotion still run. A successful command and package checks are required; the fallback is not itself evidence of a completed build. A bounded native-backend retry on this host also stalled during `dsymutil` before bundle assembly; backend selection alone did not resolve the observed stall, and no root cause is established.
 
 ## Try the disposable sample
 
