@@ -138,10 +138,13 @@ private enum HistoryExportFormat {
 }
 
 private struct HistoryExportConfirmation: View {
+    private enum FocusTarget: Hashable { case saveJSON }
+
     @EnvironmentObject private var store: AppStore
     @Environment(\.dismiss) private var dismiss
     @AppStorage("pip.files.theme") private var look = "paper"
     @AppStorage("pip.files.appearance") private var appearance = "light"
+    @FocusState private var focusedAction: FocusTarget?
     @State private var errorText = ""
     let snapshot: HistoryExportSnapshot
     let protectedRoot: URL
@@ -175,9 +178,12 @@ private struct HistoryExportConfirmation: View {
                 Spacer()
                 Button("Save CSV…") { save(.csv) }
                 Button("Save JSON…") { save(.json) }
-                    .buttonStyle(PipPrimaryStyle(palette: palette)).keyboardShortcut(.defaultAction)
+                    .buttonStyle(PipPrimaryStyle(palette: palette))
+                    .keyboardShortcut(.defaultAction)
+                    .focused($focusedAction, equals: .saveJSON)
             }
         }
+        .defaultFocus($focusedAction, .saveJSON)
         .padding(PipSpace.section).frame(width: 540)
     }
 

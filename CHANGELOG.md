@@ -1,6 +1,7 @@
 # Changes
 
 ## Unreleased · experimental source integration
+- Plus History now gives Save JSON an explicit initial focus target while retaining the Return default action and Escape cancellation. The experiment awaits native keyboard retest in Neutral Plus and Pip Plus; it does not establish a fix or acceptance. [Related issue #8](https://github.com/Ghostzy0/pip-files/issues/8).
 - Dirty-rule quit and close confirmation now uses an owned AppKit alert sheet; Escape resolves to Keep Editing and close Discard continues after sheet dismissal. Native retest of this correction remains pending. [Related issue #13](https://github.com/Ghostzy0/pip-files/issues/13).
 - The unsaved-draft confirmation now observes delegate state through a dedicated SwiftUI view modifier, addressing the reproduced missing-alert update. Direct native retest remains pending. [Related issue #13](https://github.com/Ghostzy0/pip-files/issues/13).
 
